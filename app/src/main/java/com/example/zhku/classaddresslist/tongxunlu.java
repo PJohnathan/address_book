@@ -1,15 +1,23 @@
 package com.example.zhku.classaddresslist;
 
 import android.bluetooth.le.AdvertisingSetParameters;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.icu.text.RelativeDateTimeFormatter;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +27,6 @@ public class tongxunlu extends AppCompatActivity {
     private SearchView search;
     private ListView list_view;
     private Spinner zhuanye;
-    private Spinner banji;
     private List<Student> studentList = new ArrayList<>();
 
     @Override
@@ -61,7 +68,44 @@ public class tongxunlu extends AppCompatActivity {
         });
 
         zhuanye = findViewById(R.id.zhuanye);
-        banji = findViewById(R.id.banji);
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.title,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.add:
+                //跳入添加的界面
+                AlertDialog.Builder builder = new AlertDialog.Builder(tongxunlu.this);
+                LayoutInflater inflater = tongxunlu.this.getLayoutInflater();//获取layoutinflater对象
+                View layout = inflater.inflate(R.layout.add_students,null);//创建布局
+                builder.setIcon(R.drawable.student);
+                builder.setTitle("添加学生信息");
+                builder.setView(layout);//动态加载布局
+                builder.setPositiveButton("修改", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //单击修改后进行的操作
+                    }
+                });
+                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //单击取消后的操作
+                        Toast.makeText(tongxunlu.this,"你取消了添加学生信息",Toast.LENGTH_LONG).show();
+                    }
+                });
+                builder.create().show();//显示对话框
+                break;
+                default:
+        }
+        return true;
+    }
+
 }

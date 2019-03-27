@@ -10,25 +10,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="专业：" />
+            android:text="专业班级："
+            android:textSize="18sp"/>
+
         <Spinner
             android:id="@+id/zhuanye"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:entries="@array/zhuanye"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="班级："/>
-
-        <Spinner
-            android:id="@+id/banji"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:entries="@array/banji"/>
         <Button
             android:id="@+id/jiansuo"
             android:layout_width="wrap_content"
@@ -43,10 +33,9 @@
         android:queryHint="查找"
         android:iconifiedByDefault="false"/><!--设置该searchview默认是否自动缩小图标-->
 
-<ListView
-    android:id="@+id/list_view"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"/>
-
+    <ListView
+        android:id="@+id/list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>
