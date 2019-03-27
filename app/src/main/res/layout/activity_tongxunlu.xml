@@ -12,6 +12,7 @@
             android:layout_height="wrap_content"
             android:text="专业：" />
         <Spinner
+            android:id="@+id/zhuanye"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -23,6 +24,7 @@
             android:text="班级："/>
 
         <Spinner
+            android:id="@+id/banji"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -37,7 +39,9 @@
     <SearchView
         android:id="@+id/search"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:queryHint="查找"
+        android:iconifiedByDefault="false"/><!--设置该searchview默认是否自动缩小图标-->
 
 <ListView
     android:id="@+id/list_view"

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="zhuanye">
-        <item>--请选择--</item>
+        <item>--请输入--</item>
         <item>物联网工程</item>
         <item>电子信息工程</item>
         <item>通信工程</item>
@@ -10,7 +10,7 @@
         <item>信息管理与信息系统</item>
     </string-array>
     <string-array name="banji">
-        <item>--请选择--</item>
+        <item>--请输入--</item>
         <item>161班</item>
         <item>162班</item>
         <item>163班</item>
