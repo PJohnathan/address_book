@@ -20,8 +20,8 @@
         <activity android:name=".tongxunlu" />
         <activity android:name=".Detail"
             android:theme="@style/Detail">
-
         </activity>
+        <activity android:name=".AddActivity"/>
     </application>
 
 </manifest>
