@@ -1,10 +1,13 @@
 package com.example.zhku.classaddresslist;
 
-public class Student {
+import org.litepal.crud.DataSupport;
+
+public class Student extends DataSupport {
     private String name;
     private int imageId;
     private String telephone;
     private String address;
+    private String zhuanye;
 
     public int getImageId() {
         return imageId;
@@ -22,6 +25,10 @@ public class Student {
         return address;
     }
 
+    public String getZhuanye() {
+        return zhuanye;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -36,5 +43,9 @@ public class Student {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public void setZhuanye(String zhuanye) {
+        this.zhuanye = zhuanye;
     }
 }
