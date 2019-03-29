@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -30,26 +31,29 @@ public class tongxunlu extends AppCompatActivity {
     private SearchView search;
     private ListView list_view;
     private Spinner zhuanye;
+    private ArrayAdapter adapter1;
+    private String position1;
+    private Button jiansuo;
     private List<Student> studentList = new ArrayList<>();
-
-    //声明对话框里面的编辑框
-    private EditText add_name;
-    private EditText add_address;
-    private EditText add_tel;
-    private EditText add_class;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tongxunlu);
 
-        //对对话框里面的内容初始化
-        add_name = findViewById(R.id.add_name);
-        add_address = findViewById(R.id.add_address);
-        add_class = findViewById(R.id.add_class);
-        add_tel = findViewById(R.id.add_telephone);
-
         list_view = findViewById(R.id.list_view);
+        zhuanye = findViewById(R.id.zhuanye);
+        adapter1 = ArrayAdapter.createFromResource(this, R.array.zhuanye, android.R.layout.simple_spinner_item);//将内容与arrayadapter连接起来，获取数组里面的数据
+        zhuanye.setOnItemSelectedListener(new SpinnerXMLSelectedListener());
+        jiansuo = findViewById(R.id.jiansuo);
+        jiansuo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //点击检索有进行的操作
+                Toast.makeText(tongxunlu.this,position1,Toast.LENGTH_LONG).show();
+            }
+        });
+
         final StudentAdapter adapter = new StudentAdapter(this,R.layout.student_item,studentList);
         list_view.setAdapter(adapter);
         list_view.setTextFilterEnabled(true);//设置listview启用过滤
@@ -83,8 +87,6 @@ public class tongxunlu extends AppCompatActivity {
             }
         });
 
-        zhuanye = findViewById(R.id.zhuanye);
-
     }
 
     @Override
@@ -98,38 +100,25 @@ public class tongxunlu extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.add:
                 //跳入添加的界面
-                AlertDialog.Builder builder = new AlertDialog.Builder(tongxunlu.this);
-                LayoutInflater inflater = tongxunlu.this.getLayoutInflater();//获取layoutinflater对象
-                View layout = inflater.inflate(R.layout.add_students,null);//创建布局
-                builder.setIcon(R.drawable.student);
-                builder.setTitle("添加学生信息");
-                builder.setView(layout);//动态加载布局
-                builder.setPositiveButton("添加", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //单击添加后进行的操作
-                        Connector.getDatabase();//点击后会创建数据库
-                        //获取添加的数据到数据库
-                        Student student = new Student();
-                        student.setName(add_name.getText().toString());
-                        student.setZhuanye(add_class.getText().toString());
-                        student.setTelephone(add_tel.getText().toString());
-                        student.setAddress(add_address.getText().toString());
-                        Toast.makeText(tongxunlu.this,"添加成功",Toast.LENGTH_SHORT).show();
-                    }
-                });
-                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //单击取消后的操作
-                        Toast.makeText(tongxunlu.this,"你取消了添加学生信息",Toast.LENGTH_LONG).show();
-                    }
-                });
-                builder.create().show();//显示对话框
+                Intent intent = new Intent(tongxunlu.this,AddActivity.class);
+                startActivity(intent);
                 break;
+
                 default:
         }
         return true;
     }
 
+    class SpinnerXMLSelectedListener implements AdapterView.OnItemSelectedListener{
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            position1 = adapter1.getItem(position).toString();//将获取的专业班级传入position1
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    }
 }
