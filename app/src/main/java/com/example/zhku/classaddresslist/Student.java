@@ -2,7 +2,9 @@ package com.example.zhku.classaddresslist;
 
 import org.litepal.crud.DataSupport;
 
-public class Student extends DataSupport {
+import java.io.Serializable;
+
+public class Student extends DataSupport implements Serializable {
     private String name;
     private int imageId;
     private String telephone;
@@ -46,6 +48,16 @@ public class Student extends DataSupport {
     }
 
     public void setZhuanye(String zhuanye) {
+        this.zhuanye = zhuanye;
+    }
+
+    public Student(){
+    }
+    public Student(int imageId,String name,String telephone,String address,String zhuanye){
+        this.imageId = imageId;
+        this.name = name;
+        this.telephone = telephone;
+        this.address = address;
         this.zhuanye = zhuanye;
     }
 }

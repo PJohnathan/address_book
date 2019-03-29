@@ -4,10 +4,12 @@ import android.bluetooth.le.AdvertisingSetParameters;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.icu.text.RelativeDateTimeFormatter;
+import android.location.Address;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,6 +23,7 @@ import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import org.litepal.crud.DataSupport;
 import org.litepal.tablemanager.Connector;
 
 import java.util.ArrayList;
@@ -33,8 +36,10 @@ public class tongxunlu extends AppCompatActivity {
     private Spinner zhuanye;
     private ArrayAdapter adapter1;
     private String position1;
+
     private Button jiansuo;
     private List<Student> studentList = new ArrayList<>();
+    private StudentAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,18 +50,95 @@ public class tongxunlu extends AppCompatActivity {
         zhuanye = findViewById(R.id.zhuanye);
         adapter1 = ArrayAdapter.createFromResource(this, R.array.zhuanye, android.R.layout.simple_spinner_item);//将内容与arrayadapter连接起来，获取数组里面的数据
         zhuanye.setOnItemSelectedListener(new SpinnerXMLSelectedListener());
+
         jiansuo = findViewById(R.id.jiansuo);
         jiansuo.setOnClickListener(new View.OnClickListener() {
+            //点击检索有进行的操作
             @Override
             public void onClick(View v) {
-                //点击检索有进行的操作
-                Toast.makeText(tongxunlu.this,position1,Toast.LENGTH_LONG).show();
+
+                //列表为空时直接添加数据
+                if (studentList.isEmpty()) {
+
+                    //选择物联网工程161班的情况
+                    if (position1.equals("物联网工程161班")) {
+                        List<Student> students = DataSupport.where("zhuanye = ?", "物联网工程161班").order("name").find(Student.class);
+                        for (Student student : students) {
+                            Student student1 = new Student(R.drawable.p9, student.getName(),student.getTelephone(),student.getAddress(),student.getZhuanye());
+                            studentList.add(student1);
+                        }
+                        adapter = new StudentAdapter(tongxunlu.this, R.layout.student_item, studentList);
+                        list_view.setAdapter(adapter);
+                    } else if (position1.equals("物联网工程162班")) {//选则物联网工程162班的情况
+                        List<Student> students = DataSupport.where("zhuanye = ?", "物联网工程162班").order("name").find(Student.class);
+                        for (Student student : students) {
+                            Student student1 = new Student(R.drawable.p1, student.getName(),student.getTelephone(),student.getAddress(),student.getZhuanye());
+                            studentList.add(student1);
+                        }
+                        StudentAdapter adapter = new StudentAdapter(tongxunlu.this, R.layout.student_item, studentList);
+                        list_view.setAdapter(adapter);
+                    }else if (position1.equals("物联网工程163班")){
+                        List<Student> students = DataSupport.where("zhuanye = ?", "物联网工程163班").order("name").find(Student.class);
+                        for (Student student : students) {
+                            Student student1 = new Student(R.drawable.p3, student.getName(),student.getTelephone(),student.getAddress(),student.getZhuanye());
+                            studentList.add(student1);
+                        }
+                        StudentAdapter adapter = new StudentAdapter(tongxunlu.this, R.layout.student_item, studentList);
+                        list_view.setAdapter(adapter);
+                    }else if (position1.equals("物联网工程164班")){
+                        List<Student> students = DataSupport.where("zhuanye = ?", "物联网工程164班").order("name").find(Student.class);
+                        for (Student student : students) {
+                            Student student1 = new Student(R.drawable.p4, student.getName(),student.getTelephone(),student.getAddress(),student.getZhuanye());
+                            studentList.add(student1);
+                        }
+                        StudentAdapter adapter = new StudentAdapter(tongxunlu.this, R.layout.student_item, studentList);
+                        list_view.setAdapter(adapter);
+                    }
+
+                } else{
+                    if (position1.equals("物联网工程161班")) {
+                        studentList.removeAll(studentList);
+                        List<Student> students = DataSupport.where("zhuanye = ?", "物联网工程161班").order("name desc").find(Student.class);
+                        for (Student student : students) {
+                            Student student1 = new Student(R.drawable.p9, student.getName(),student.getTelephone(),student.getAddress(),student.getZhuanye());
+                            studentList.add(student1);
+                        }
+                        adapter = new StudentAdapter(tongxunlu.this, R.layout.student_item, studentList);
+                        list_view.setAdapter(adapter);
+                    }else if (position1.equals("物联网工程162班")){
+                        studentList.removeAll(studentList);
+                        List<Student> students = DataSupport.where("zhuanye = ?", "物联网工程162班").order("name desc").find(Student.class);
+                        for (Student student : students) {
+                            Student student1 = new Student(R.drawable.p1, student.getName(),student.getTelephone(),student.getAddress(),student.getZhuanye());
+                            studentList.add(student1);
+                        }
+                        StudentAdapter adapter = new StudentAdapter(tongxunlu.this, R.layout.student_item, studentList);
+                        list_view.setAdapter(adapter);
+                    }else if (position1.equals("物联网工程163班")){
+                        studentList.removeAll(studentList);
+                        List<Student> students = DataSupport.where("zhuanye = ?", "物联网工程163班").order("name desc").find(Student.class);
+                        for (Student student : students) {
+                            Student student1 = new Student(R.drawable.p3, student.getName(),student.getTelephone(),student.getAddress(),student.getZhuanye());
+                            studentList.add(student1);
+                        }
+                        StudentAdapter adapter = new StudentAdapter(tongxunlu.this, R.layout.student_item, studentList);
+                        list_view.setAdapter(adapter);
+                    }else if (position1.equals("物联网工程164班")){
+                        studentList.removeAll(studentList);
+                        List<Student> students = DataSupport.where("zhuanye = ?", "物联网工程164班").order("name desc").find(Student.class);
+                        for (Student student : students) {
+                            Student student1 = new Student(R.drawable.p4, student.getName(),student.getTelephone(),student.getAddress(),student.getZhuanye());
+                            studentList.add(student1);
+                        }
+                        adapter = new StudentAdapter(tongxunlu.this, R.layout.student_item, studentList);
+                        list_view.setAdapter(adapter);
+                    }
+                }
+                Toast.makeText(tongxunlu.this, position1, Toast.LENGTH_LONG).show();
             }
         });
 
-        final StudentAdapter adapter = new StudentAdapter(this,R.layout.student_item,studentList);
-        list_view.setAdapter(adapter);
-        list_view.setTextFilterEnabled(true);//设置listview启用过滤
+        //list_view.setTextFilterEnabled(true);//设置listview启用过滤
         search = findViewById(R.id.search);
         search.setSubmitButtonEnabled(true);//设置该searchview显示搜索按钮
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -72,7 +154,7 @@ public class tongxunlu extends AppCompatActivity {
                     //list_view.clearTextFilter();//清除过滤
                     adapter.getFilter().filter("");
                 }else {
-                   // list_view.setFilterText(newText);//使用用户输入的内容对listview的列表进行过滤，出现黑框
+                   //list_view.setFilterText(newText);//使用用户输入的内容对listview的列表进行过滤，出现黑框
                     adapter.getFilter().filter(newText);
                 }
                 return true;
@@ -83,7 +165,14 @@ public class tongxunlu extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Student student = studentList.get(position);
-                //点击进行页面跳转
+                //点击进行页面跳转,并且传数据
+                Intent intent = new Intent(tongxunlu.this,Detail.class);
+                intent.putExtra(Detail.STUDENT_NAME,student.getName());
+                intent.putExtra(Detail.STUDENT_IMAGE_ID,student.getImageId());
+                intent.putExtra(Detail.STUDENT_TEL,student.getTelephone());
+                intent.putExtra(Detail.STUDENT_ADDR,student.getAddress());
+                intent.putExtra(Detail.STUDENT_CLA,student.getZhuanye());
+                startActivity(intent);
             }
         });
 
@@ -109,7 +198,7 @@ public class tongxunlu extends AppCompatActivity {
         return true;
     }
 
-    class SpinnerXMLSelectedListener implements AdapterView.OnItemSelectedListener{
+   class SpinnerXMLSelectedListener implements AdapterView.OnItemSelectedListener{
 
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
